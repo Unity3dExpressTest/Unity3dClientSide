@@ -2,10 +2,11 @@
 using System.Collections;
 
 public class PlayersManager : MonoBehaviour {
-    public string getUsersUrl = GlobalConsts.Instance.serverIP + "/users";
+    string getUsersUrl;
 	// Use this for initialization
-	void Start () {
-        
+	void Start ()
+    {
+        getUsersUrl = GlobalConsts.Instance.serverIP + "/users";
         WWW www = new WWW(getUsersUrl);
         StartCoroutine(WaitForRequest(www));
 	}
@@ -17,7 +18,8 @@ public class PlayersManager : MonoBehaviour {
         Debug.Log(www.text);
     }
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 	
 	}
 }

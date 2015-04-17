@@ -8,7 +8,7 @@ using Assets;
 public class PlayerServerConnection : MonoBehaviour {
     public Text textOutput;
     public bool IsUser = false;
-    public string postUserUrl = GlobalConsts.Instance.serverIP + "/user";
+    string postUserUrl;
     public string userID;
 
     // Use this for initialization
@@ -55,7 +55,7 @@ public class PlayerServerConnection : MonoBehaviour {
         player.y = this.transform.position.y.ToString();
 
         string jsonString = JsonConvert.SerializeObject(player);
-        Debug.Log(jsonString);
+        //Debug.Log(jsonString);
 
         //Hashtable headers = form.headers;
         Hashtable headers = new Hashtable();
@@ -65,6 +65,7 @@ public class PlayerServerConnection : MonoBehaviour {
         byte[] rawData = System.Text.Encoding.ASCII.GetBytes(jsonString);
         //Debug.Log(System.Text.Encoding.Default.GetString(rawData));
 
+        postUserUrl = GlobalConsts.Instance.serverIP + "/user";
         WWW www = new WWW(postUserUrl, rawData, headers);
         StartCoroutine(WaitForRequest(www));
     }
@@ -77,7 +78,7 @@ public class PlayerServerConnection : MonoBehaviour {
         // check for errors
         if (www.error == null)
         {
-            Debug.Log("WWW Ok!: " + www.text);
+            //Debug.Log("WWW Ok!: " + www.text);
         }
         else
         {

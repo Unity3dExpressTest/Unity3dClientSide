@@ -23,7 +23,7 @@ public class PlayerServerConnection : MonoBehaviour {
         {
             GetPlayerData();
         }
-        textOutput.text = userID;
+        //textOutput.text = userID;
     }
 
     // Update is called once per frame

@@ -5,27 +5,52 @@ using UnityEngine.UI;
 using Newtonsoft.Json;
 using Assets;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerServerConnection : MonoBehaviour {
     public Text textOutput;
     public bool IsUser = false;
-    public string url = "52.6.61.57/user";
+    public string postUserUrl = GlobalConsts.Instance.serverIP + "/user";
+    public string userID;
 
     // Use this for initialization
     void Start()
     {
-        string deviceID = SystemInfo.deviceUniqueIdentifier;
+        if(IsUser)
+        {
+            userID = GlobalConsts.Instance.userID;
+            PostPlayerData();
+        }
+        else
+        {
+            GetPlayerData();
+        }
+        textOutput.text = userID;
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if(IsUser)
+        {
+            PostPlayerData();
+        }
+        else
+        {
+            GetPlayerData();
+        }
+    }
+
+    void GetPlayerData()
+    {
+
+    }
+
+    void PostPlayerData()
+    {
         
-        /*
-        WWWForm form = new WWWForm();
-        form.AddField("id", deviceID);
-        form.AddField("name", deviceID);
-        form.AddField("x", this.transform.position.x.ToString());
-        form.AddField("y", this.transform.position.y.ToString());
-        */
 
         Player player = new Player();
-        player.id = deviceID;
-        player.name = deviceID;
+        player.id = userID;
+        player.name = userID;
         player.x = this.transform.position.x.ToString();
         player.y = this.transform.position.y.ToString();
 
@@ -40,24 +65,10 @@ public class PlayerScript : MonoBehaviour {
         byte[] rawData = System.Text.Encoding.ASCII.GetBytes(jsonString);
         //Debug.Log(System.Text.Encoding.Default.GetString(rawData));
 
-        WWW www = new WWW(url, rawData, headers);
+        WWW www = new WWW(postUserUrl, rawData, headers);
         StartCoroutine(WaitForRequest(www));
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        /*
-        string deviceID = SystemInfo.deviceUniqueIdentifier;
-        WWWForm form = new WWWForm();
-        form.AddField("id", deviceID);
-        form.AddField("name", deviceID);
-        form.AddField("x", this.transform.position.x.ToString());
-        form.AddField("y", this.transform.position.y.ToString());
-
-        WWW www = new WWW(url + ":" + port + route, form);
-        StartCoroutine(WaitForRequest(www));*/
-    }
+    
 
     IEnumerator WaitForRequest(WWW www)
     {
@@ -72,7 +83,5 @@ public class PlayerScript : MonoBehaviour {
         {
             Debug.Log("WWW Error: " + www.error);
         }
-
-        //textOutput.text = www.text;
     }
 }

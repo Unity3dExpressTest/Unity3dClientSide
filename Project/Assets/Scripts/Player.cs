@@ -11,5 +11,6 @@ namespace Assets
         public string name { get; set; }
         public string x { get; set; }
         public string y { get; set; }
+        //public string color { get; set; }
     }
 }

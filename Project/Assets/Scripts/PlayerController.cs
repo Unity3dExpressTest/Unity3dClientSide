@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public Transform player;
-    public float speed = 1.0f;
+    public float speed = .5f;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +15,6 @@ public class PlayerController : MonoBehaviour {
         float xDelta = Input.GetAxis("Horizontal");
         float yDelta = Input.GetAxis("Vertical");
         Vector3 move = new Vector3(xDelta, yDelta, 0);
-        player.position += move * speed * Time.deltaTime;
+        player.position += move * speed;
 	}
 }

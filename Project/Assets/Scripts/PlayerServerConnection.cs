@@ -80,7 +80,7 @@ public class PlayerServerConnection : MonoBehaviour {
         //Debug.Log(jsonString);
 
         //Hashtable headers = form.headers;
-        Hashtable headers = new Hashtable();
+		Dictionary<string, string> headers = new Dictionary<string, string>();
         headers.Add("Content-Type", "application/json");
         //headers.Add("Content-Type", "application/json");
 

@@ -73,7 +73,6 @@ public class PlayerServerConnection : MonoBehaviour {
     {
         Player player = new Player();
         player.id = userID;
-        player.name = userID;
         player.x = this.transform.position.x.ToString();
         player.y = this.transform.position.y.ToString();
 

@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Newtonsoft.Json;
 using Assets;
+using System;
 
 public class PlayerServerConnection : MonoBehaviour {
     public Text textOutput;
     public bool IsUser = false;
     string postUserUrl;
     public string userID;
+    public MeshRenderer renderer;
 
     // Use this for initialization
     void Start()
@@ -23,13 +25,36 @@ public class PlayerServerConnection : MonoBehaviour {
         {
             GetPlayerData();
         }
-        //textOutput.text = userID;
+        textOutput.text = userID;
+        byte[] ba = System.Text.Encoding.Default.GetBytes(userID);
+        string hexString = BitConverter.ToString(ba);
+        //Debug.Log("hexString: " + hexString);
+
+        string redString = "" + hexString[0] + hexString[1];
+        //Debug.Log("R: " + redString);
+        float red = ConvertHexToFloat(redString);
+
+        string greenString = "" + hexString[3] + hexString[4];
+        //Debug.Log("G: " + greenString);
+        float green = ConvertHexToFloat(greenString);
+
+        string blueString = "" + hexString[6] + hexString[7];
+        //Debug.Log("B: " + blueString);
+        float blue = ConvertHexToFloat(blueString);
+
+        renderer.material.color = new Color(red/256, green/256, blue/256);
+    }
+
+    float ConvertHexToFloat(string hexString)
+    {
+        int num = Int32.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
+        return (float)num;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update ()
     {
-        if(IsUser)
+        if(IsUser && this.GetComponentInParent<PlayerController>().idle)
         {
             PostPlayerData();
         }
@@ -46,8 +71,6 @@ public class PlayerServerConnection : MonoBehaviour {
 
     void PostPlayerData()
     {
-        
-
         Player player = new Player();
         player.id = userID;
         player.name = userID;

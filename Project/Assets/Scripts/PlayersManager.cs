@@ -16,12 +16,12 @@ public class PlayersManager : MonoBehaviour {
     {
         yield return www;
 
-        Debug.Log("WWW text: " + www.text);
+        //Debug.Log("WWW text: " + www.text);
 
         List<Player> data = JsonConvert.DeserializeObject<List<Player>>(www.text);
         foreach (Player player in data) {
             string playerID = player.id;
-            Debug.Log(playerID);
+            //Debug.Log(playerID);
             if (!playerID.Equals(GlobalConsts.Instance.userID))
             {
                 GameObject playerGO;
@@ -40,13 +40,14 @@ public class PlayersManager : MonoBehaviour {
                 }
                 var xPos = float.Parse(player.x);
                 var yPos = float.Parse(player.y);
+                
                 playerGO.transform.position = new Vector3(xPos, yPos, 0);
             }
         }
         
     }
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
     {
         GetPlayersRequest();
 	}
